@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Pet Feeder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            color: white;
+        }
+        #onButton {
+            background-color: green;
+        }
+        #offButton {
+            background-color: red;
+        }
+        #offButton:disabled {
+            background-color: #ccc;
+        }
+        #onButton:disabled {
+            background-color: #ccc;
+        }
+        #status {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            border: 2px solid black;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .image-container {
+            margin-top: 20px;
+            text-align: center;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        #petImage {
+            display: none;
+            width: 100%;
+            border-radius: 5px;
+        }
+        .food-status {
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- กล่องแสดงสถานะอาหาร -->
+        <p id="foodStatus" class="food-status">กำลังตรวจสอบสถานะอาหาร...</p>
+
+        <h1>Smart Pet Feeder</h1>
+
+        <!-- ปุ่มสำหรับควบคุม -->
+        <button id="onButton">เปิดเครื่อง</button>
+        <button id="offButton" disabled>ปิดเครื่อง</button>
+
+        <!-- แสดงสถานะ -->
+        <p id="status">สถานะ: ปิด</p>
+
+        <!-- กล่องแสดงรูปภาพ -->
+        <div class="image-container">
+            <button id="showImageButton">แสดงภาพจากกล้อง</button>
+            <img id="petImage" src="https://via.placeholder.com/300x200.png?text=Pet+Image" alt="Pet Image">
+        </div>
+    </div>
+
+    <script>
+        // โค้ดสำหรับการสลับสถานะปุ่ม
+        const onButton = document.getElementById('onButton');
+        const offButton = document.getElementById('offButton');
+        const statusText = document.getElementById('status');
+        const showImageButton = document.getElementById('showImageButton');
+        const petImage = document.getElementById('petImage');
+        const foodStatusText = document.getElementById('foodStatus');
+
+        // สมมติว่าเรามี API สำหรับตรวจสอบสถานะอาหารจากอุปกรณ์
+        // เราจะใช้โค้ดนี้เพื่อทดสอบการเปลี่ยนสถานะเป็น "อาหารยังมีอยู่" หรือ "อาหารหมดแล้ว"
+        // ฟังก์ชันจำลองสถานะอาหาร
+        function checkFoodStatus() {
+            // สมมติว่าเราจะรับค่าได้จาก API ที่ตรวจสอบอาหาร
+            const foodRemaining = Math.random() > 0.5; // สุ่มค่า true หรือ false เพื่อจำลองสถานะอาหาร
+
+            if (foodRemaining) {
+                foodStatusText.textContent = 'อาหารยังมีอยู่';
+                foodStatusText.style.backgroundColor = '#d4edda'; // สีเขียวอ่อน
+                foodStatusText.style.color = 'green'; // สีข้อความเขียว
+            } else {
+                foodStatusText.textContent = 'อาหารหมดแล้ว';
+                foodStatusText.style.backgroundColor = '#f8d7da'; // สีแดงอ่อน
+                foodStatusText.style.color = 'red'; // สีข้อความแดง
+            }
+        }
+
+        // ตรวจสอบสถานะอาหารเมื่อโหลดหน้าเว็บ
+        window.onload = checkFoodStatus;
+
+        onButton.addEventListener('click', () => {
+            statusText.textContent = 'สถานะ: เปิด';
+            statusText.style.backgroundColor = '#d4edda'; // สีพื้นหลังเมื่อเปิด
+            statusText.style.color = 'green'; // สีข้อความเมื่อเปิด
+            onButton.disabled = true;
+            offButton.disabled = false;
+        });
+
+        offButton.addEventListener('click', () => {
+            statusText.textContent = 'สถานะ: ปิด';
+            statusText.style.backgroundColor = '#f8d7da'; // สีพื้นหลังเมื่อปิด
+            statusText.style.color = 'red'; // สีข้อความเมื่อปิด
+            onButton.disabled = false;
+            offButton.disabled = true;
+        });
+
+        // โค้ดสำหรับแสดงรูปภาพ
+        showImageButton.addEventListener('click', () => {
+            petImage.style.display = 'block'; // แสดงรูปภาพ
+        });
+    </script>
+
+</body>
+</html>
